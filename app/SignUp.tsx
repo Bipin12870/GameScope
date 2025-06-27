@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { TextInput, StyleSheet, Platform, View } from 'react-native';
-import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
-import { Pressable } from 'react-native';
+import { ThemedView } from '@/components/ThemedView';
 import { ValidIndicator } from '@/components/ui/ValidIndicator';
-import { useUser } from '@/hooks/userContext'; // assumed import
+import React, { useEffect, useState } from 'react';
+import { Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
 
 export default function SignUpScreen() {
   const [email, setEmail] = useState<string>('');
