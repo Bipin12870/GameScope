@@ -4,6 +4,7 @@ import { ValidIndicator } from '@/components/ui/ValidIndicator';
 import React, { useEffect, useState } from 'react';
 import { Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
 
+
 export default function SignUpScreen() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
