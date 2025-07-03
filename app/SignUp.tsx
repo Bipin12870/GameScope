@@ -1,32 +1,36 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { ValidIndicator } from '@/components/ui/ValidIndicator';
+import { useUser } from '@/hooks/userContext';
 import React, { useEffect, useState } from 'react';
 import { Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
-
 
 export default function SignUpScreen() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isValid, setIsValid] = useState<boolean>(false);
 
+  const { register } = useUser();
+
   const emailIsValid = email.includes('@') && email.includes('.');
   const passwordIsValid = password.length >= 6;
-
-  //const user = useUser();
 
   useEffect(() => {
     setIsValid(emailIsValid && passwordIsValid);
   }, [emailIsValid, passwordIsValid]);
 
-  const handleSignUp = () => {
-    console.log('Signing up with:', email, password);
-    // Future: Firebase or backend call
+  const handleSignUp = async () => {
+    try {
+      await register(email, password);
+      console.log('✅ Account created and user logged in!');
+    } catch (err: any) {
+      console.error('❌ Error creating account:', err.message || err);
+    }
   };
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="title" style={styles.header}> Sign Up</ThemedText>
+      <ThemedText type="title" style={styles.header}>🔐 Sign Up</ThemedText>
 
       <ThemedView style={styles.form}>
         {/* Email */}
@@ -103,7 +107,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 10,
     paddingHorizontal: 12,
-    paddingRight: 40, // enough space for the icon
+    paddingRight: 40,
     fontSize: 16,
     backgroundColor: '#f9f9f9',
     color: '#000',
@@ -112,7 +116,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 12,
     top: '50%',
-    transform: [{ translateY: -9 }], // centers the icon vertically
+    transform: [{ translateY: -9 }],
   },
   button: {
     backgroundColor: '#e63946',
